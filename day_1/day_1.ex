@@ -1,33 +1,24 @@
 defmodule AOC_2021.Day1 do
   @input "input.txt"
+
   def part_one_1 do
     [_, result] =
       @input
       |> list_of_numbers()
-      |> Enum.reduce([0, 0], fn item, [last_item, result] ->
-        cond do
-          last_item == 0 ->
-            [item, result]
-
-          last_item < item ->
-            [item, result + 1]
-
-          true ->
-            [item, result]
-        end
+      |> Enum.reduce([0, 0], fn
+        item, [0, result] -> [item, result]
+        item, [last_item, result] when last_item < item -> [item, result + 1]
+        item, [_, result] -> [item, result]
       end)
 
     result
   end
 
   def part_one_2 do
-    result =
       @input
       |> list_of_numbers()
       |> Enum.to_list()
       |> do_job(0)
-
-    result
   end
 
   defp do_job([first | [second | _] = tail], result) when first < second,
@@ -38,21 +29,20 @@ defmodule AOC_2021.Day1 do
   defp do_job([_ | _], result), do: result
 
   def part_two do
-    [_item, _, result] =
+    [_, _, result] =
       @input
       |> list_of_numbers()
       |> Enum.chunk_every(3, 1, :discard)
-      |> Enum.reduce([0, 0, 0], fn [first, second, third], [last_item, window_sum, result] ->
-        cond do
-          last_item == 0 ->
-            [first + second + third, second + third, result]
+      |> Enum.reduce([0, 0, 0], fn
+        [first, second, third], [0, _window_sum, result] ->
+          [first + second + third, second + third, result]
 
-          last_item < window_sum + third ->
-            [window_sum + third, second + third, result + 1]
+        [_first, second, third], [last_item, window_sum, result]
+        when last_item < window_sum + third ->
+          [window_sum + third, second + third, result + 1]
 
-          true ->
-            [window_sum + third, second + third, result]
-        end
+        [_first, second, third], [_, window_sum, result] ->
+          [window_sum + third, second + third, result]
       end)
 
     result
