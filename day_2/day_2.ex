@@ -10,20 +10,11 @@ defmodule AOC_2021.Day2 do
     horizontal * depth
   end
 
-  defp do_job("forward " <> n, [horizontal, depth]) do
-    n = String.to_integer(n)
-    [horizontal + n, depth]
-  end
+  defp do_job("forward " <> n, [h, d]), do: [h + String.to_integer(n), d]
 
-  defp do_job("down " <> n, [horizontal, depth]) do
-    n = String.to_integer(n)
-    [horizontal, depth + n]
-  end
+  defp do_job("down " <> n, [h, d]), do: [h, d + String.to_integer(n)]
 
-  defp do_job("up " <> n, [horizontal, depth]) do
-    n = String.to_integer(n)
-    [horizontal, depth - n]
-  end
+  defp do_job("up " <> n, [h, d]), do: [h, d - String.to_integer(n)]
 
   defp list_of_strings(input) do
     input
