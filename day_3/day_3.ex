@@ -1,21 +1,8 @@
 defmodule AOC_2021.Day3 do
   @input "input_3.txt"
 
-  @initial_list_of_tuples [{"0", 0}, {"1", 0}]
-  @acc [
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples,
-    @initial_list_of_tuples
-  ]
+  @initial_list_of_tuples [{?0, 0}, {?1, 0}]
+  @acc List.duplicate(@initial_list_of_tuples, 12)
 
   def part_one do
     @input
@@ -29,45 +16,22 @@ defmodule AOC_2021.Day3 do
     Enum.reduce(
       list_of_strings,
       @acc,
-      fn <<first::binary-size(1)>> <>
-           <<second::binary-size(1)>> <>
-           <<third::binary-size(1)>> <>
-           <<fourth::binary-size(1)>> <>
-           <<fifth::binary-size(1)>> <>
-           <<six::binary-size(1)>> <>
-           <<seven::binary-size(1)>> <>
-           <<eight::binary-size(1)>> <>
-           <<nine::binary-size(1)>> <>
-           <<ten::binary-size(1)>> <>
-           <<eleven::binary-size(1)>> <>
-           <<twelve::binary-size(1)>>,
-         [
-           o,
-           t,
-           th,
-           fo,
-           fi,
-           si,
-           se,
-           ei,
-           ni,
-           te,
-           el,
-           tw
-         ] ->
+      fn <<first, second, third, fourth, fifth, six, seven, eight, nine, ten, eleven, twelve,
+           _::binary>>,
+         [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12] ->
         [
-          form_in_order(o, first),
-          form_in_order(t, second),
-          form_in_order(th, third),
-          form_in_order(fo, fourth),
-          form_in_order(fi, fifth),
-          form_in_order(si, six),
-          form_in_order(se, seven),
-          form_in_order(ei, eight),
-          form_in_order(ni, nine),
-          form_in_order(te, ten),
-          form_in_order(el, eleven),
-          form_in_order(tw, twelve)
+          form_in_order(i1, first),
+          form_in_order(i2, second),
+          form_in_order(i3, third),
+          form_in_order(i4, fourth),
+          form_in_order(i5, fifth),
+          form_in_order(i6, six),
+          form_in_order(i7, seven),
+          form_in_order(i8, eight),
+          form_in_order(i9, nine),
+          form_in_order(i10, ten),
+          form_in_order(i11, eleven),
+          form_in_order(i12, twelve)
         ]
       end
     )
@@ -82,15 +46,24 @@ defmodule AOC_2021.Day3 do
   defp form_in_order([{k1, v1}, {k2, v2}], _item), do: [{k1, v1}, {k2, v2 + 1}]
 
   defp to_gamma_epsilon(list_of_tuples) do
-    Enum.reduce(list_of_tuples, {"", ""}, fn [{k1, _}, {k2, _}], {gm, ep} ->
-      {gm <> k1, ep <> k2}
+    Enum.reduce(list_of_tuples, {[], []}, fn [{k1, _}, {k2, _}], {gm, ep} ->
+      {[k1 | gm], [k2 | ep]}
     end)
   end
 
   defp count({gm, ep}) do
-    gm = Integer.parse(gm, 2) |> elem(0)
-    ep = Integer.parse(ep, 2) |> elem(0)
+    gm = parse_to_string(gm)
+    ep = parse_to_string(ep)
+
     gm * ep
+  end
+
+  defp parse_to_string(charlist) do
+    charlist
+    |> Enum.reverse()
+    |> List.to_string()
+    |> Integer.parse(2)
+    |> elem(0)
   end
 
   defp read_file(input) do
