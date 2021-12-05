@@ -16,22 +16,21 @@ defmodule AOC_2021.Day3 do
     Enum.reduce(
       list_of_strings,
       @acc,
-      fn <<first, second, third, fourth, fifth, six, seven, eight, nine, ten, eleven, twelve,
-           _::binary>>,
+      fn <<c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, _::binary>>,
          [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12] ->
         [
-          form_in_order(i1, first),
-          form_in_order(i2, second),
-          form_in_order(i3, third),
-          form_in_order(i4, fourth),
-          form_in_order(i5, fifth),
-          form_in_order(i6, six),
-          form_in_order(i7, seven),
-          form_in_order(i8, eight),
-          form_in_order(i9, nine),
-          form_in_order(i10, ten),
-          form_in_order(i11, eleven),
-          form_in_order(i12, twelve)
+          form_in_order(i1, c1),
+          form_in_order(i2, c2),
+          form_in_order(i3, c3),
+          form_in_order(i4, c4),
+          form_in_order(i5, c5),
+          form_in_order(i6, c6),
+          form_in_order(i7, c7),
+          form_in_order(i8, c8),
+          form_in_order(i9, c9),
+          form_in_order(i10, c10),
+          form_in_order(i11, c11),
+          form_in_order(i12, c12)
         ]
       end
     )
@@ -60,8 +59,8 @@ defmodule AOC_2021.Day3 do
 
   defp parse_to_string(charlist) do
     charlist
-    |> Enum.reverse()
     |> List.to_string()
+    |> String.reverse()
     |> Integer.parse(2)
     |> elem(0)
   end
