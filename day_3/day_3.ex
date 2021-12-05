@@ -21,7 +21,6 @@ defmodule AOC_2021.Day3 do
     @input
     |> read_file()
     |> find_max_min_occ()
-    |> IO.inspect(label: "+++++++++++++++++++++++ ? ")
     |> to_gamma_epsilon()
     |> count()
   end
