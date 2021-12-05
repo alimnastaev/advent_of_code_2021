@@ -21,6 +21,7 @@ defmodule AOC_2021.Day3 do
     @input
     |> read_file()
     |> find_max_min_occ()
+    |> IO.inspect(label: "+++++++++++++++++++++++ ? ")
     |> to_gamma_epsilon()
     |> count()
   end
@@ -81,8 +82,8 @@ defmodule AOC_2021.Day3 do
 
   defp form_in_order([{k1, v1}, {k2, v2}], _item), do: [{k1, v1}, {k2, v2 + 1}]
 
-  defp to_gamma_epsilon(list_of_maps) do
-    Enum.reduce(list_of_maps, {"", ""}, fn [{k1, _}, {k2, _}], {gm, ep} ->
+  defp to_gamma_epsilon(list_of_tuples) do
+    Enum.reduce(list_of_tuples, {"", ""}, fn [{k1, _}, {k2, _}], {gm, ep} ->
       {gm <> k1, ep <> k2}
     end)
   end
