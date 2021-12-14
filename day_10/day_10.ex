@@ -79,8 +79,7 @@ defmodule AOC_2021.Day10 do
   end
 
   # Incompleted
-  defp run_check(<<>>, stack, [{:incompleted, incompleted, length}, corrupted] = _result)
-       when stack != "" do
+  defp run_check("", stack, [{:incompleted, incompleted, length}, corrupted] = _result) do
     [{:incompleted, incompleted ++ [count_incompleted(stack)], length + 1}, corrupted]
   end
 
